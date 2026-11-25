@@ -52,4 +52,4 @@ jobs:
         uses: docker/build-push-action@v7.4.0
         with:
           push: true
-          tags: richardsgarcia/api_homologacao:latest
+          tags: gonzagazx/api_homologacao:latest
