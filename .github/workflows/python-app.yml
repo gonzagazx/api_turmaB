@@ -51,3 +51,21 @@ jobs:
         with:
           push: true
           tags: gonzagazx/api_homologacao:latest
+  Deploy:
+    needs: Image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy na EC2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: 184.194.184.2 
+          username: ubuntu
+          key: ${{secrets.CHAVE_HOMO}}
+          script: |
+            echo "Acesso liberado!"
+            sudo docker pull gonzagazx/api_homo:latest
+            sudo docker stop api_homologacao 2>/dev/null || true
+            sudo docker rm api_homologacao 2>/dev/null || true
+
+            sudo docker run --name api_homologacao -d -p 80:80 gonzagazx/api_homologacao:latest
